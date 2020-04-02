@@ -1,4 +1,4 @@
-package com.hong.book_rental_service.entity;
+package com.hong.book_rental_service.domian;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Rental {
 
     @Id @GeneratedValue
+    @Column(name = "rental_id")
     private Long id;
     @OneToOne
     @JoinColumn(name = "book_id")

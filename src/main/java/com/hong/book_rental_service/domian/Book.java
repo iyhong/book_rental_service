@@ -1,4 +1,4 @@
-package com.hong.book_rental_service.entity;
+package com.hong.book_rental_service.domian;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
