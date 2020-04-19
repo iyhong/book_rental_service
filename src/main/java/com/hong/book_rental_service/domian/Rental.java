@@ -10,10 +10,10 @@ public class Rental {
     @Id @GeneratedValue
     @Column(name = "rental_id")
     private Long id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
     private RentalStatus rentalStatus;

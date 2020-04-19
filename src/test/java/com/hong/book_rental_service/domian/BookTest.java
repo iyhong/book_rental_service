@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class BookTest {
     @Test
     public void create(){
-        Book book = new Book();
 
     }
 }
