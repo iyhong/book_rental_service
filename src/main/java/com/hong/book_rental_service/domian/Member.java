@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,15 +19,24 @@ public class Member {
     private Long id;
 
     private String name;
+
     private String resno;
+
     private String password;
+
+//    @Column(unique = true)
     private String email;
+
     @OneToMany(mappedBy = "member")
-    private List<Rental> rentals;
+    private List<Rental> rentals = new ArrayList<>();
+
     @Enumerated(value = EnumType.STRING)
     private MemberType memberType;
+
     private LocalDateTime createdDateTime;
+
     private LocalDateTime updatedDateTime;
+
 
     @Builder
     public Member (String name, String resno, String password, String email, List<Rental> rentals, MemberType memberType,

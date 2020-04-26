@@ -3,8 +3,8 @@ package com.hong.book_rental_service.repository;
 import com.hong.book_rental_service.domian.Book;
 import com.hong.book_rental_service.domian.BookStatus;
 import com.hong.book_rental_service.domian.Member;
-import com.hong.book_rental_service.dto.ResponseBookList;
-import org.assertj.core.api.Assertions;
+import com.hong.book_rental_service.dto.BookRequestCond;
+import com.hong.book_rental_service.dto.BookResponseList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.iterable;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -35,18 +32,23 @@ class BookRepositoryTest {
                 .build();
 
         memberRepository.save(member);
-        for (int i = 0; i < 10; i++) {
-             createBook(i, member);
-        }
+        createBook("vue.js", "원형섭", 30000, member, member);
+        createBook("reactJS 한큐에", "엄제경", 20000, member, member);
+        createBook("html", "채신욱", 35000, member, member);
+        createBook("스프링 부트", "홍인용", 25000, member, member);
+        createBook("책읽어주는 신부", "김미림", 14000, member, member);
+
+        List<Book> all = bookRepository.findAll();
     }
 
-    private void createBook(int i, Member member) {
+    private void createBook(String title, String author, int price, Member requester, Member register) {
         Book book = Book.builder()
-                .title("book" + i)
-                .author("mirim" + i)
+                .title(title)
+                .author(author)
                 .status(BookStatus.ENABLE)
-                .requestMember(member)
-                .price(30)
+                .requester(requester)
+                .register(register)
+                .price(price)
                 .build();
 
         Book savedBook = bookRepository.save(book);
@@ -69,11 +71,35 @@ class BookRepositoryTest {
     }
 
     @Test
-    public void 도서목록_조회(){
-        List<ResponseBookList> books = bookRepository.bookSearch();
-        for (ResponseBookList book : books) {
+    public void 도서목록_전체_조회(){
+        List<BookResponseList> books = bookRepository.bookSearch();
+        for (BookResponseList book : books) {
             System.out.println("book = " + book);
         }
+
+        assertThat(books.size()).isEqualTo(5);
+    }
+
+    @Test
+    public void 도서목록_제목으로_조회(){
+        BookRequestCond bookCond = new BookRequestCond("js");
+        List<BookResponseList> books = bookRepository.bookSearchByTitle(bookCond);
+        for (BookResponseList book : books) {
+            System.out.println("book = " + book);
+        }
+        assertThat(books.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    public void 도서목록_제목으로_조회_검색어없이(){
+        BookRequestCond bookCond = new BookRequestCond("");
+        List<BookResponseList> books = bookRepository.bookSearchByTitle(bookCond);
+        for (BookResponseList book : books) {
+            System.out.println("book = " + book);
+        }
+        assertThat(books.size()).isEqualTo(5);
+
     }
 
 }

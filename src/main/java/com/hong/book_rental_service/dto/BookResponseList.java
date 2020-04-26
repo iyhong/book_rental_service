@@ -2,17 +2,20 @@ package com.hong.book_rental_service.dto;
 
 import com.hong.book_rental_service.domian.BookStatus;
 import com.hong.book_rental_service.domian.Member;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-public class ResponseBookList {
+@Getter
+public class BookResponseList {
     private Long id;
     private String title;
     private int price;
     private int stock;
     private String author;
     private BookStatus status;
-    private Member requestMember;
+    private Member requester;
+    private Member register;
     private LocalDateTime purchaseDateTime;
     private LocalDateTime createdDateTime;
     private LocalDateTime updatedDateTime;
@@ -26,7 +29,8 @@ public class ResponseBookList {
                 ", stock=" + stock +
                 ", author='" + author + '\'' +
                 ", status=" + status +
-                ", requestMember=" + requestMember.getName() +
+                ", requester=" + requester.getName() +
+                ", register=" + register.getName() +
                 ", purchaseDateTime=" + purchaseDateTime +
                 ", createdDateTime=" + createdDateTime +
                 ", updatedDateTime=" + updatedDateTime +
