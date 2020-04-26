@@ -16,6 +16,7 @@ public class Rental {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+    @Enumerated(value = EnumType.STRING)
     private RentalStatus rentalStatus;
     private LocalDateTime rentalDateTime;
     private LocalDateTime returnDateTime;

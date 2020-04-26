@@ -3,6 +3,8 @@ package com.hong.book_rental_service.domian;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,12 +20,15 @@ public class Book {
     private int price;
     private int stock;
     private String author;
+    @Enumerated(value = EnumType.STRING)
     private BookStatus status;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member")
     private Member requestMember;
     private LocalDateTime purchaseDateTime;
+    @CreatedDate
     private LocalDateTime createdDateTime;
+    @LastModifiedDate
     private LocalDateTime updatedDateTime;
 
     @Builder
@@ -36,4 +41,5 @@ public class Book {
         this.status = status;
         this.requestMember = requestMember;
     }
+
 }
